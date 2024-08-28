@@ -1,0 +1,144 @@
+<section>
+  <div class="page-header">
+    <h1>{{ vm.pageTitle }} '{{ vm.tool.name }}'</h1>
+  </div>
+  <form name="form" ng-submit="vm.submitForm()">
+    <fieldset>
+      <div class="form-group has-feedback" ng-class="{ 'has-error': form.name.$invalid, 'has-success': form.name.$valid }">
+        <label for="name">Name</label>
+        <input class="form-control" type="text" id="name" name="name" placeholder="Name" ng-model="vm.tool.name" ng-pattern="/^[a-zA-Z0-9\-_.]*$/" required autofocus>
+        <span class="glyphicon form-control-feedback" ng-class="{ 'glyphicon-remove': form.name.$invalid, 'glyphicon-ok': form.name.$valid }"></span>
+        <span class="help-block" ng-messages="form.name.$error">
+          <p ng-message="required">This field is required</p>
+          <p ng-message="pattern">This must only contain letters, numbers, dots, dashes and underscores</p>
+        </span>
+      </div>
+      <div class="form-group has-feedback" ng-class="{ 'has-error': form.toolEmailName.$invalid, 'has-success': form.toolEmailName.$valid }">
+        <label for="toolEmailName">Tool Email Name (Official Name)</label>
+        <input class="form-control" type="text" id="toolEmailName" name="toolEmailName" placeholder="Long Name" ng-model="vm.tool.toolEmailName" required autofocus>
+        <span class="glyphicon form-control-feedback" ng-class="{ 'glyphicon-remove': form.toolEmailName.$invalid, 'glyphicon-ok': form.toolEmailName.$valid }"></span>
+        <span class="help-block" ng-messages="form.toolEmailName.$error">
+          <p ng-message="required">This field is required</p>
+        </span>
+      </div>
+      <div class="form-group has-feedback" ng-class="{ 'has-error': form.toolUrl.$invalid, 'has-success': form.toolUrl.$valid }">
+        <label for="toolUrl">Tool Url</label>
+        <input class="form-control" type="text" id="toolUrl" name="toolUrl" placeholder="Tool Url" ng-model="vm.tool.toolUrl" required>
+        <span class="glyphicon form-control-feedback" ng-class="{ 'glyphicon-remove': form.toolUrl.$invalid, 'glyphicon-ok': form.toolUrl.$valid }"></span>
+        <span class="help-block" ng-messages="form.toolUrl.$error">
+          <p ng-message="required">This field is required</p>
+        </span>
+      </div>
+      <div class="form-group has-feedback" ng-class="{ 'has-error': form.repo.$invalid, 'has-success': form.repo.$valid }">
+        <label for="repo">Repo</label>
+        <input class="form-control" type="text" id="repo" name="repo" placeholder="Repo" ng-model="vm.tool.repo" required>
+        <span class="glyphicon form-control-feedback" ng-class="{ 'glyphicon-remove': form.repo.$invalid, 'glyphicon-ok': form.repo.$valid }"></span>
+        <span class="help-block" ng-messages="form.repo.$error">
+          <p ng-message="required">This field is required</p>
+        </span>
+      </div>
+      <div class="form-group has-feedback" ng-class="{ 'has-error': form.folderPath.$invalid, 'has-success': form.folderPath.$valid }">
+        <label for="folderPath">Folder Path <i class="ebIcon ebIcon_info" title="Folder Path for the Tool's repo on the Production Server"></i></label>
+        <input class="form-control" type="text" id="folderPath" name="folderPath" placeholder="Folder Path" ng-model="vm.tool.folderPath" required>
+        <span class="glyphicon form-control-feedback" ng-class="{ 'glyphicon-remove': form.folderPath.$invalid, 'glyphicon-ok': form.folderPath.$valid }"></span>
+        <span class="help-block" ng-messages="form.folderPath.$error">
+          <p ng-message="required">This field is required</p>
+        </span>
+      </div>
+      <div class="form-group has-feedback" ng-class="{ 'has-error': form.changeLogUrl.$invalid, 'has-success': form.changeLogUrl.$valid }">
+        <label for="changeLogUrl">Change Log Url</label>
+        <input class="form-control" type="text" id="changeLogUrl" name="changeLogUrl" placeholder="Change Log Url" ng-model="vm.tool.changeLogUrl" required>
+        <span class="glyphicon form-control-feedback" ng-class="{ 'glyphicon-remove': form.changeLogUrl.$invalid, 'glyphicon-ok': form.changeLogUrl.$valid }"></span>
+        <span class="help-block" ng-messages="form.changeLogUrl.$error">
+          <p ng-message="required">This field is required</p>
+        </span>
+      </div>
+      <div class="form-group has-feedback" ng-class="{ 'has-error': form.grafanaDashboardUrl.$invalid, 'has-success': form.grafanaDashboardUrl.$valid }">
+        <label for="grafanaDashboardUrl">Grafana Monitoring Dashboard Url</label>
+        <input class="form-control" type="text" id="grafanaDashboardUrl" name="grafanaDashboardUrl" placeholder="Grafana Monitoring Dashboard Url" ng-model="vm.tool.grafanaDashboardUrl">
+        <span class="glyphicon form-control-feedback" ng-class="{ 'glyphicon-remove': form.grafanaDashboardUrl.$invalid, 'glyphicon-ok': form.grafanaDashboardUrl.$valid }"></span>
+        <span class="help-block" ng-messages="form.grafanaDashboardUrl.$error">
+          <p ng-message="required">This field is required</p>
+        </span>
+      </div>
+      <div class="form-group">
+        <div class="pretty p-svg p-round p-jelly">
+            <input type="checkbox" id="checkBox" checked="checked" ng-model="vm.tool.notificationEnabled"/>
+            <div class="state p-primary">
+              <!-- svg path -->
+              <svg class="svg svg-icon" viewBox="0 0 20 20">
+                <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
+              </svg>
+              <label><b>Notification Enabled</b></label>
+            </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="notifications">Notifications</label>
+        <input class="form-control" type="text" id="notifications" name="notifications" placeholder="Notifications" ng-model="vm.tool.notifications">
+      </div>
+      <div class="form-group has-feedback" ng-class="{ 'has-error': form.notificationStart.$invalid, 'has-success': form.notificationStart.$valid }">
+        <label for="notificationStart">Notification Start</label>
+        <input class="form-control form-tool-datetime-icon datetime-input" type="datetime-local" id="notificationStart" name="notificationStart" format-value="yyyy-MM-ddTHH:mm" ng-model="vm.tool.notificationStart" >
+        <span class="glyphicon form-control-feedback" ng-class="{ 'glyphicon-remove': form.notificationStart.$invalid, 'glyphicon-ok': form.notificationStart.$valid }"></span>
+        <span class="help-block" ng-messages="form.toolUrl.$error">
+        </span>
+      </div>
+      <div class="form-group has-feedback" ng-class="{ 'has-error': form.notificationEnd.$invalid, 'has-success': form.notificationEnd.$valid }">
+        <label for="notificationEnd">Notification End</label>
+        <input class="form-control form-tool-datetime-icon datetime-input" type="datetime-local" id="notificationEnd" value="{{vm.tool.notificationEnd}}" value="yyyy-MM-ddTHH:mm" name="notificationEnd" ng-model="vm.tool.notificationEnd" >
+        <span class="glyphicon form-control-feedback" ng-class="{ 'glyphicon-remove': form.notificationEnd.$invalid, 'glyphicon-ok': form.notificationEnd.$valid }"></span>
+        <span class="help-block" ng-messages="form.toolUrl.$error">
+        </span>
+      </div>
+      <!-- JIRA Issue -->
+      <div class="form-group has-feedback" ng-class="{ 'has-error': form.notificationJira.$invalid, 'has-success': form.notificationJira.$valid }">
+        <label>Notification JIRA Issue</label>
+        <input class="form-control" name="notificationJira" type="text" placeholder="JIRA Issue" ng-model="vm.tool.notificationJira" ng-minlength="3" ng-maxlength="60" ng-pattern="/^[a-zA-Z0-9\-_.\s]*$/" ng-change="vm.jiraIssueValidation(vm.tool.notificationJira)" ng-model-options="{updateOn: 'blur'}">
+        <span class="glyphicon form-control-feedback" ng-class="{ 'glyphicon-remove': form.notificationJira.$invalid, 'glyphicon-ok': form.notificationJira.$valid }"></span>
+        <span class="help-block" ng-messages="form.notificationJira.$error">
+          <p ng-message="minlength">This must be at least of length 3</p>
+          <p ng-message="maxlength">This must be at most of length 60</p>
+          <p ng-message="pattern">This must only contain letters, numbers, dots, dashes, underscores and spaces</p>
+          <p ng-message="jiraValidation">Provide a valid JIRA Issue</p>
+        </span>
+      </div>
+      <div class="form-group">
+        <div class="pretty p-svg p-round p-jelly">
+            <input type="checkbox" id="checkBox" checked="checked" ng-model="vm.tool.ci"/>
+            <div class="state p-primary">
+              <!-- svg path -->
+              <svg class="svg svg-icon" viewBox="0 0 20 20">
+                <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
+              </svg>
+              <label><b>Continuous Integration</b>
+                <i class="ebIcon ebIcon_info" title="Enable to Continuous Integration for the Tool (Automatic Upgrades)"></i>
+              </label>
+            </div>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>Recipients Emails</legend>
+      <div ng-repeat="recipientEmail in vm.tool.recipients track by $index" class="panel panel-default">
+        <div class="panel-heading clearfix">
+          <h6 class="panel-title pull-left" style="padding-top: 7.5px;">Recipient Email {{ $index + 1 }}: <strong>{{ recipientEmail }}</strong></h6>
+          <div class="btn-group pull-right">
+            <button ng-click="vm.removeRecipientEmail($index)" type="button" class="btn btn-sm"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="form-group has-feedback" ng-class="{ 'has-error': form['recipients[' + $index + ']'].$invalid, 'has-success': form['recipients[' + $index + ']'].$valid }">
+            <label>Email</label>
+            <input class="form-control" name="recipients[{{$index}}]" type="text" placeholder="Email" ng-model="vm.tool.recipients[$index]">
+            <span class="glyphicon form-control-feedback" ng-class="{ 'glyphicon-remove': form['recipients[' + $index + ']'].$invalid, 'glyphicon-ok': form['recipients[' + $index + ']'].$valid }"></span>
+          </div>
+        </div>
+      </div>
+      <button id="add-email" ng-click="vm.addRecipientEmail()" type="button" class="btn btn-default pull-right"><i class="glyphicon glyphicon-plus"></i> Add Recipient Email</button>
+    </fieldset>
+    <div class="btn-group pull-left" title="{{form.$invalid || vm.formSubmitting ? 'Ensure all values are valid and required fields are filled in.' : ''}}">
+      <button class="btn btn-primary" type="submit" ng-disabled="form.$invalid || vm.formSubmitting">Save</button>
+    </div>
+  </form>
+</section>

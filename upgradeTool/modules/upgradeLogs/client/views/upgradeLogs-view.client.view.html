@@ -1,0 +1,186 @@
+<section>
+  <div class="page-header">
+    <div class="btn-toolbar pull-right">
+        <button class="btn btn-success" ng-if="!vm.completedEmailSentTime" ng-disabled="vm.loading || vm.sendingEmail" ng-click="vm.sendCompletedEmail()">Send Completed Email</button>
+        <a class="btn btn-sm btn-warning" ui-sref="logs.list({ toolName: '{{vm.log.toolName}}' })">History</a>
+    </div>
+    <h1>Viewing '{{ vm.tool.toolEmailName }}' {{ vm.log.upgradeFromVersion > vm.log.upgradeToVersion ? 'Downgrade' : 'Upgrade' }} Log <a ui-sref="tools.view({ toolId: '{{vm.toolId}}' })">Tool ID: {{ vm.toolId }}</a></h1>
+  </div>
+  <form>
+    <fieldset disabled>
+      <div class="row">
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>From Version</label>
+            <p class="form-control-static">{{ vm.log.upgradeFromVersion }}</p>
+          </div>
+          <div class="form-group">
+            <label>To Version</label>
+            <p class="form-control-static">{{ vm.log.upgradeToVersion }}</p>
+          </div>
+          <div class="form-group">
+            <label>Started By</label>
+            <p class="form-control-static">{{ vm.log.userUpgrading ? vm.log.userUpgrading : 'None' }}</p>
+          </div>
+          <div class="form-group">
+            <label>Start Time</label>
+            <p class="form-control-static">{{ vm.startTime }}</p>
+          </div>
+          <div class="form-group">
+            <label>End Time</label>
+            <p class="form-control-static">{{ vm.endTime }}</p>
+          </div>
+          <div class="form-group">
+            <label>Health-Check Result</label>
+            <p class="form-control-static">
+              {{ vm.log.healthCheckSuccessful ? 'Successful' : 'Failed' }}
+            </p>
+          </div>
+          <div class="form-group">
+            <label>Upgrade Result</label>
+            <p class="form-control-static">
+              {{ vm.log.successful ? 'Successful' : 'Failed' }}
+            </p>
+          </div>
+        </div>
+        <!-- TERMINAL OUTPUT -->
+        <div class="col-md-10">
+          <div class="col-border-padding">
+            <div class="form-group">
+              <label>Terminal Output</label>
+              <div class="dependent-items">
+                <pre class="terminal-output" style="white-space: pre-line">
+                  {{ vm.consoleOutput ? vm.consoleOutput : 'None' }}
+                </pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset disabled>
+      <!-- Planned Email -->
+      <div class="col-md-8">
+       <div ng-if="!vm.plannedEmailSentTime">
+         <h4>Planned Email</h4>
+         <p> No Data </p>
+       </div>
+        <div ng-if="vm.plannedEmailSentTime">
+          <h4>Planned Email</h4>
+          <div class="form-group">
+            <label>Sent</label>
+            <p class="form-control-static">
+               {{ vm.plannedEmailSentTime }}
+            </p>
+          </div>
+          <div class="form-group">
+            <label>Sender</label>
+            <p class="form-control-static">
+               {{ vm.plannedEmailSender.displayName }}: {{ vm.plannedEmailSender.email}}
+            </p>
+          </div>
+          <div class="form-group">
+            <label>Recipients</label>
+            <div class="dependent-items">
+              <p ng-repeat="recipient in vm.log.plannedEmail.recipients track by $index">
+                 {{ recipient }}
+              </p>
+            </div>
+          </div>
+          <div class="form-group">
+           <label>Commits</label>
+           <div class="dependent-items">
+             <table id="email-commits" class="table">
+               <thead>
+                 <tr>
+                   <th>User</th>
+                   <th colspan="2">Message</th>
+                   <th>Issue</th>
+                   <th>Type</th>
+                   <th colspan="2">Summary</th>
+                   <th colspan="2">Issue Comment</th>
+                   <th colspan="2">Comment</th>
+                 </tr>
+               </thead>
+               <tbody>
+                 <tr ng-repeat="commit in vm.log.plannedEmail.commits track by $index">
+                   <td>{{ commit.commitUser }}</td>
+                   <td colspan="2" width="100">{{ commit.commitMessage }}</td>
+                   <td colspan="6" width="100" ng-if="commit.issues.length">
+                     <table id="issues" class="table">
+                       <tbody>
+                         <tr ng-repeat="issueInfo in commit.issues track by $index">
+                           <td><a href="{{ issueInfo.issueUrl }}" target="_blank">{{ issueInfo.issue }}</a></td>
+                           <td>{{ issueInfo.issueType }}</td>
+                           <td colspan="2">{{ issueInfo.issueSummary }}</td>
+                           <td colspan="2">{{ issueInfo.comment }}</td>
+                         </tr>
+                       </tbody>
+                     </table>
+                   </td>
+                   <td colspan="6" width="100" ng-if="!commit.issues.length"></td>
+                   <td colspan="2" width="100">{{ commit.comment }}</td>
+                 </tr>
+               </tbody>
+             </table>
+           </div>
+         </div>
+         <div class="form-group">
+           <label>Email Subject</label>
+           <p class="form-control-static">
+             {{ vm.log.plannedEmail.subject }}
+           </p>
+         </div>
+         <div class="form-group">
+           <label>Email Content</label>
+           <p class="form-control-static max-height-field">
+             <span id="planned-email-body"></span>
+           </p>
+         </div>
+       </div>
+     </div>
+    <!-- Completed Email -->
+    <div class="col-md-4">
+      <div ng-if="!vm.completedEmailSentTime" class="col-border-padding">
+        <h4>Completed Email</h4>
+        <p> No Data </p>
+      </div>
+      <div ng-if="vm.completedEmailSentTime" class="col-border-padding">
+       <h4>Completed Email</h4>
+       <div class="form-group">
+         <label>Sent</label>
+         <p class="form-control-static">
+           {{ vm.completedEmailSentTime }}
+         </p>
+       </div>
+       <div class="form-group">
+         <label>Sender</label>
+         <p class="form-control-static">
+           {{ vm.completedEmailSender.displayName }} : {{ vm.completedEmailSender.email}}
+         </p>
+       </div>
+       <div class="form-group">
+         <label>Recipients</label>
+         <div class="dependent-items">
+           <p ng-repeat="recipient in vm.log.completedEmail.recipients track by $index">
+             {{ recipient }}
+           </p>
+         </div>
+       </div>
+       <div class="form-group">
+         <label>Email Subject</label>
+         <p class="form-control-static">
+           {{ vm.log.completedEmail.subject }}
+         </p>
+       </div>
+       <div class="form-group">
+         <label>Email Content</label>
+         <p class="form-control-static max-height-field">
+           <span id="completed-email-body"></span>
+         </p>
+       </div>
+     </div>
+    </div>
+   </fieldset>
+  </form>
+</section>

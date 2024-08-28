@@ -1,0 +1,69 @@
+{{define "title"}}{{CoreApp.Name}} Status{{end}}
+{{define "description"}}{{CoreApp.Name}} is currently monitoring {{len CoreApp.Services}} services with 0 of them offline. {{CoreApp.Name}} is using Statping to monitor applications.{{end}}
+{{define "content"}}
+<div class="container col-md-7 col-sm-12 mt-2 sm-container">
+<h1 class="col-12 text-center mb-4 mt-sm-3 header-title">{{.Name}}</h1>
+
+{{ if .Description }}
+<h5 class="col-12 text-center mb-5 header-desc">{{ .Description }}</h5>
+{{ end }}
+
+{{ range Groups true }}
+    {{if ne (len .Services) 0}}
+    <div class="col-12 full-col-12">
+        <h4 class="group_header">
+            {{.Name}}
+            <a href="mailto:{{.TeamEmail}}" data-toggle="tooltip" title="Email Team">
+                <span class="glyphicon">✉</span>
+            </a>
+            <a href="{{.OnCallURL}}">
+                <img src="/oncall.svg" style="width: 20px;" data-toggle="tooltip" title="On-Call Rota">
+            </a>
+        </h4>
+        <div class="list-group online_list mb-3">
+            {{ range VisibleGroupServices . }}
+            <div class="service_li list-group-item list-group-item-action {{if not .Online}}bg-danger text-white{{ end }}" data-id="{{.Id}}">
+                <a href={{ .Domain }}>{{ .Name }}
+                {{if .Online}}
+                    <span class="badge bg-success float-right pulse-glow">ONLINE</span>
+                {{ else }}
+                    <span class="badge bg-white text-black-50 float-right pulse">OFFLINE</span>
+                {{end}}
+                <a href="{{ .JiraBoard }}" class="float-right" style="padding-right: 20px;" data-toggle="tooltip" title="Clone template to create a new ticket">New Ticket</a>
+            </div>
+            </a>
+            {{ end }}
+        </div>
+    </div>
+    {{ end }}
+{{end}}
+
+{{ if .Messages }}
+    <div class="col-12">
+    {{range .Messages}}
+        <div class="alert alert-primary" role="alert">
+            <h3>{{.Title}}</h3>
+            <span class="mb-3">{{safe .Description}}</span>
+            <div class="d-block mt-2 mb-4">
+                <span class="float-left small">Starts on {{ToString .StartOn}}</span>
+                <span class="float-right small">Ends on {{ToString .EndOn}}</span>
+            </div>
+        </div>
+    {{end}}
+    </div>
+{{end}}
+
+<div class="col-12 full-col-12">
+{{ if not .Services }}
+    <div class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">No Services to Monitor!</h4>
+        <p>Your Statping Status Page is working correctly, but you don't have any services to monitor. Go to the <a href="dashboard">Dashboard</a> and add a website to begin really using your status page!</p>
+        <hr>
+        <p class="mb-0">If this is a bug, please make an issue in the Statping Github Repo. <a href="https://github.com/hunterlong/statping" class="btn btn-sm btn-outline-danger float-right">Statping Github Repo</a></p>
+    </div>
+{{end}}
+</div>
+{{end}}
+{{define "extra_scripts"}}
+<script src="charts.js"></script>
+{{end}}

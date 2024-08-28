@@ -1,0 +1,20 @@
+<section>
+  <div class="page-header">
+    <h1>Contact Information</h1>
+    <a ui-sref="contactInfo.create" class="btn btn-sm btn-success">Create New Contact Info</a>
+  </div>
+  <div ng-if="vm.tableLoading" class="table-loading">
+    <div class="ebLoader">
+      <div class="ebLoader-Holder">
+        <span class="ebLoader-Dots ebLoader-Dots_color_darkPurple ebLoader-Dots_size_big"></span>
+      </div>
+    </div>
+  </div>
+
+  <div ng-style="vm.tableLoading && { 'visibility': 'hidden' }">
+    <table class="table table-striped table-condensed non-clickable-row" id="contactInfo-table">
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+</section>

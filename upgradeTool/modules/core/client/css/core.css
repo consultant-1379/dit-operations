@@ -1,0 +1,419 @@
+.ebTable {
+  width: 100% !important;
+}
+
+.navbar {
+  width: 100% !important;
+  padding-right: 15px !important;
+}
+
+.loading {
+  background: #F5F5F5;
+  height: 100%;
+  left: 0;
+  opacity: 0.9;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+.content {
+  margin: 0 auto !important;
+  margin-top: 50px !important;
+  width: 100% !important;
+}
+
+.table-home {
+  table-layout:fixed;
+  width: 100% !important;
+  border: 1px solid black;
+}
+
+.table-home td {
+  max-width: 400px;
+  padding: 5px;
+  border: 1px solid #A9A9A9 !important;
+}
+
+.table-home th {
+  background-color: #ddd !important;
+  word-wrap: break-word;
+  font-family: Arial, Verdana, sans-serif;
+  font-size: 22px;
+  line-height: 1.42857143;
+  padding: 5px;
+  border: 1px solid black !important;
+}
+
+.table-text {
+  text-align: center
+}
+
+pre {
+  background-color: #333333;
+  word-wrap: break-word;
+  border: 1px solid black;
+  font-family: Arial, Verdana, sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #CDEE69;
+}
+
+.terminal-output {
+  color: #CDEE69;
+  -webkit-animation: type .5s 4.25s steps(20, end) forwards;
+  -moz-animation: type .5s 4.25s steps(20, end) forwards;
+  -o-animation: type .5s 4.25s steps(20, end) forwards;
+  animation: type .5s 4.25s steps(20, end) forwards;
+  overflow-y: auto;
+  height: 500px;
+}
+
+select {
+  border: 0 !important;
+  background: #333333;
+  background-image: none;
+}
+
+/* Custom Select */
+.select {
+  position: relative;
+  display: flex;
+  width: 20em;
+  height: 3em;
+  line-height: 3;
+  background: #333333;
+  overflow: hidden;
+  border-radius: .25em;
+}
+select {
+  flex: 1;
+  padding: 0 .5em;
+  color: #fff;
+  cursor: pointer;
+}
+/* Arrow */
+.select::after {
+  content: '\25BC';
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 1em;
+  background: #333333;
+  cursor: pointer;
+  pointer-events: none;
+  transition: .25s all ease;
+}
+/* Transition */
+.select:hover::after {
+  color: #CDEE69;
+}
+
+.console-container {
+  font-family: monospace,monospace;
+  color: #fff;
+  width: calc(100% - 3em);
+  max-width: 100%;
+  max-height: calc(100% - 3em);
+  overflow-y: auto;
+  margin: 1em 1em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  background: #000000;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 0.5em;
+  box-shadow: 0 0.75em 3em rgba(50, 50, 50, 0.5);
+  z-index: 100;
+  line-height: 1.5;
+}
+
+.console-input {
+  font-family: monospace,monospace;
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  min-width: calc(100% - 2em);
+  resize: none;
+}
+
+.console-input:before {
+  content: '> ';
+  color: #FC3565;
+  vertical-align: top;
+}
+
+.output-cmd:before {
+  content: '> ';
+  color: #FC3565;
+  vertical-align: top;
+}
+.output-text:before {
+  content: '> ';
+  color: #5F8787;
+  font-weight: 600 !important;
+  vertical-align: top;
+}
+
+.output-text,
+.output-cmd {
+  width: 100%;
+  display: block;
+}
+
+.console-inner {
+  padding: 0.3em 1.1em;
+}
+
+.output-text,
+.output-cmd {
+  display: block;
+  white-space: pre;
+}
+
+/* Datatables */
+
+.dataTables_scrollHead {
+  height: 30px;
+}
+
+table {
+  table-layout:fixed;
+  width: 100% !important;
+}
+
+table td {
+  word-wrap: break-word;
+}
+
+.live-table td, .deleted-table td {
+  white-space:inherit;
+}
+
+table th {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.table-striped > tbody > tr:nth-child(odd) {
+  background-color: #f0f0f0;
+}
+
+table.non-clickable-row tbody tr:hover td {
+  background-color: #e0e0e0;
+  font-weight: bold;
+}
+
+div.clickable:hover {
+  background-color: #a7a7a7;
+}
+
+div.clickable a:hover {
+  font-weight: bold;
+  cursor: pointer !important;
+}
+
+.live-table th, .deleted-table th {
+  white-space:inherit;
+}
+
+div.dts_label {
+  visibility: hidden;
+}
+
+.name-column {
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+td a {
+  font-size: 1em;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-header {
+  padding: 2px 16px;
+  background-color: white;
+  color: black;
+}
+
+.modal-body {
+  padding: 2px 16px;
+}
+
+.dropmenu-content {
+  display: none;
+}
+
+.dropmenu-content.show {
+  display: block;
+}
+
+.max-height-field {
+  height: 300px !important;
+  overflow: auto !important;
+}
+
+/* Override the 'top' property of the 'glyphicon' class */
+.glyphicon {
+  top: 0;
+}
+
+/* Handling Screen Widths for Tables */
+@media only screen and (max-width: 1400px) {
+  th, td, td a {
+    font-size: 13px;
+  }
+}
+
+@media only screen and (max-width: 1100px) {
+  th, td, td a {
+    font-size: 12px;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  th, td, td a {
+    font-size: 11px;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  th, td, td a {
+    font-size: 10px;
+  }
+}
+
+@media only screen and (max-width: 850px) {
+  th, td, td a {
+    font-size: 9px;
+  }
+}
+
+textarea {
+  width: 100%;
+  height: 100%;
+  resize: vertical;
+  overflow: auto;
+}
+
+.fixed-header {
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.fixed-header tbody {
+  display:block;
+  overflow: auto;
+  height: 330px;
+}
+
+.fixed-header thead tr {
+   display: block;
+}
+
+.fixed-header th, .fixed-header td {
+  width: 200px;
+}
+
+/* The container */
+.checkBox {
+  display: block;
+  position: absolute;
+  top: 80px;
+  right: 1px;
+  width: 360px;
+  padding-left: 80px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.dependant-items {
+  height: 150px !important;
+  overflow: auto !important;
+}
+
+.row-relative { position: relative; }
+.col-border-padding { padding-left: 15px; }
+.col-border
+{
+  padding-left: 0;
+  position: static;
+}
+.col-border:before
+{
+  border-left: 1px solid grey;
+  bottom: 0;
+  content: "";
+  position: absolute;
+  top: 0;
+}
+
+table.dataTable thead .sorting { background: url('../../../core/client/img/sort_both.png') no-repeat center right; }
+table.dataTable thead .sorting_asc { background: url('../../../core/client/img/sort_asc.png') no-repeat center right; }
+table.dataTable thead .sorting_desc { background: url('../../../core/client/img/sort_desc.png') no-repeat center right; }
+
+/* Datetime picker setup for planned & tool forms */
+.form-planned-datetime-icon::-webkit-calendar-picker-indicator {
+  position: absolute;
+  left: 25px;
+}
+
+.form-tool-datetime-icon::-webkit-calendar-picker-indicator {
+  position: absolute;
+  left: 10px;
+}
+
+.datetime-input::-webkit-datetime-edit {
+  position: relative;
+  left: 10px;
+}
+
+.datetime-input::-webkit-datetime-edit-fields-wrapper {
+  position: relative;
+  left: 10px;
+}

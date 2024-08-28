@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Dashboard</title>
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <link href='EricssonCapitalTT.ttf' rel='stylesheet' type='x-font-ttf'>
+  <link rel="shortcut icon" href="favicon.ico" />
+</head>
+
+  <body>
+    <h1>Deployment Inventory Tool Dashboard</h1>
+    <div class="topnav">
+        <a class="active" href="/">Production</a>
+        <a href="/statsPage">Project Statistics</a>
+    </div>
+    <table style="border:0;">
+      <tr>
+        <td>
+          <table>
+            <tr>
+              <td><strong>Production:</strong></td>
+              <td></td>
+              <td></td>
+              <td><%= currentVersion %></td>
+            </tr>
+            <tr>
+              <td><strong>Merged:</strong></td>
+              <td></td>
+              <td></td>
+              <td><%= mergedVersion %></td>
+            </tr>
+          </table>
+        </td>
+        <td>
+          <iframe frameborder=0 scrolling="no" width=1000 height=300 src="/graph"></iframe>
+        </td>
+      </tr>
+    </table>
+    <br>
+    <br>
+    <table>
+      <tr>
+        <th>Not in Production</th>
+      </tr>
+      <tr>
+        <td>
+          <pre><%= commits %></pre>
+        </td>
+      </tr>
+    </table>
+    <br>
+    <table>
+      <tr>
+        <th>In Production</th>
+      </tr>
+      <tr>
+        <td>
+          <pre><%= changelog %></pre>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

@@ -1,0 +1,99 @@
+<section>
+  <div class="page-header">
+    <div class="btn-toolbar pull-right">
+      <button class="btn btn-sm btn-primary" ui-sref="tools.edit({toolId: '{{vm.tool._id}}' })">Edit</button>
+      <button class="btn btn-warning" ui-sref="logs.list({ toolName: '{{vm.tool.name}}' })">History</button>
+    </div>
+    <h1>Viewing Tool '{{ vm.tool.name }}'</h1>
+  </div>
+  <form>
+    <fieldset disabled>
+      <div class="row row-relative">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Tool Email Name (Official Name)</label>
+            <p class="form-control-static">{{ vm.tool.toolEmailName }}</p>
+          </div>
+          <div class="form-group">
+            <label>Current Version</label>
+            <p class="form-control-static">{{ vm.tool.currentVersion }}</p>
+          </div>
+          <div class="form-group">
+            <label>Merged Version</label>
+            <p class="form-control-static">{{ vm.tool.mergedVersion }}</p>
+          </div>
+          <div class="form-group">
+            <label>Tool Url</label>
+            <p class="form-control-static"><a href="http://{{vm.tool.toolUrl}}" target="_blank">{{vm.tool.toolUrl}}</a></p>
+          </div>
+          <div class="form-group">
+            <label>Repo</label>
+            <p class="form-control-static">{{ vm.tool.repo }}</p>
+          </div>
+          <div class="form-group">
+            <label>Folder Path <i class="ebIcon ebIcon_info" title="Folder Path for the Tool's repo on the Production Server"></i></label>
+            <p class="form-control-static">{{ vm.tool.folderPath }}</p>
+          </div>
+          <div class="form-group">
+            <label>Change Log Url</label>
+            <p class="form-control-static"><a href="{{vm.tool.changeLogUrl}}" target="_blank">{{vm.tool.changeLogUrl}}</a></p>
+          </div>
+          <div class="form-group">
+            <label>Grafana Monitoring Dashboard Url</label>
+            <p class="form-control-static">
+              <a ng-if="vm.tool.grafanaDashboardUrl" href="{{vm.tool.grafanaDashboardUrl}}" target="_blank">{{vm.tool.grafanaDashboardUrl}}</a>
+              <span ng-if="!vm.tool.grafanaDashboardUrl">None</span>
+            </p>
+          </div>
+          <div class="form-group">
+            <label>Continuous Integration <i class="ebIcon ebIcon_info" title="Auto upgrade is {{ vm.tool.ci ? 'Enabled' : 'Disabled' }}.{{ vm.tool.ci ? '&#10 User does not have to take unnecessary steps unless stated in an email from Upgrade Tool.' : '' }}"></i></label>
+            <p class="form-control-static">{{ vm.tool.ci ? 'Enabled' : 'Disabled' }}</p>
+          </div>
+          <div class="form-group">
+            <label>Planned Upgrade Email Sent</label>
+            <p class="form-control-static">{{ vm.tool.plannedUpgradeEmailSent }}</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-border">
+          <div class="col-border-padding">
+            <div class="form-group">
+              <label>Recipients Emails</label>
+              <div ng-switch="vm.tool.recipients.length">
+                <p ng-switch-when="0">None</p>
+                <div ng-switch-default class="dependant-items">
+                  <p ng-repeat="recipientEmail in vm.tool.recipients">
+                    {{ recipientEmail }}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Notification Status</label>
+              <p class="form-control-static">{{ vm.tool.notificationEnabled ? 'Enabled' : 'Disabled' }}</p>
+            </div>
+            <div class="form-group">
+              <label>Notifications</label>
+              <p class="form-control-static">{{ vm.tool.notifications }}</p>
+            </div>
+            <div class="form-group">
+              <label>Notification JIRA Issue</label>
+              <p class="form-control-static">{{ vm.tool.notificationJira }}</p>
+            </div>
+            <div class="form-group">
+              <label>Notification Start</label>
+              <p class="form-control-static">{{ vm.tool.notificationStart }}</p>
+            </div>
+            <div class="form-group">
+              <label>Notification End</label>
+              <p class="form-control-static">{{ vm.tool.notificationEnd }}</p>
+            </div>
+            <div class="form-group">
+              <label>Notification Removal in:</label>
+              <p class="form-control-static">{{ vm.tool.autoRemoveNotification }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</section>

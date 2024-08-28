@@ -1,0 +1,36 @@
+<section>
+  <div class="page-header">
+    <div class="btn-toolbar pull-right">
+      <button class="btn btn-sm btn-primary" ui-sref="contactInfo.edit({ contactInfoId: '{{vm.contactInfo._id}}' })">Edit</button>
+    </div>
+    <h1>Viewing Contact Information '{{ vm.contactInfo.team }}'</h1>
+  </div>
+  <form>
+    <fieldset disabled>
+      <div class="row row-relative">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Team</label>
+            <p class="form-control-static">{{ vm.contactInfo.team }}</p>
+          </div>
+          <div class="form-group">
+            <label>Team Email</label>
+            <p class="form-control-static">{{ vm.contactInfo.teamEmail }}</p>
+          </div>
+          <div class="form-group">
+            <label>Scrum Master</label>
+            <p class="form-control-static">{{ vm.scrumMaster.displayName }}</p>
+          </div>
+          <div class="form-group">
+            <label>Product Owner</label>
+            <p class="form-control-static">{{ vm.productOwner.displayName }}</p>
+          </div>
+          <div>
+            <label>JIRA Template Url</label>
+            <p class="form-control-static"><a href="{{vm.contactInfo.jiraTemplateUrl}}">{{vm.contactInfo.jiraTemplateUrl}}</a></p>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</section>

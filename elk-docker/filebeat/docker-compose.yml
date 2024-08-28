@@ -1,0 +1,23 @@
+version: "2"
+services:
+  filebeat:
+    container_name: filebeat
+    hostname: filebeat
+    user: root
+    command: filebeat -e -strict.perms=false
+    build: .
+    volumes:
+      - "filebeat_data:/usr/share/filebeat/data:rw"
+      - "/var/lib/docker/containers:/usr/share/dockerlogs/data:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - filebeat_net
+
+volumes:
+# create a persistent volume for Filebeat
+  filebeat_data:
+
+networks:
+  filebeat_net:
+    external:
+      name: elkdocker_elk_net

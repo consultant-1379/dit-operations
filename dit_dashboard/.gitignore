@@ -1,0 +1,11 @@
+deployment-inventory-tool/
+node_modules/
+views/activity/
+views/assets/
+views/authors/
+views/comments/
+views/files/
+views/general.ejs
+views/general.html
+views/lines/
+views/out.ejs

@@ -1,0 +1,25 @@
+version: "2"
+
+services:
+  metricbeat:
+    build: .
+    container_name: metricbeat
+    hostname: metricbeat
+    user: root
+    command: metricbeat -e -strict.perms=false
+    volumes:
+      - "metricbeat_data:/usr/share/metricbeat/data:rw"
+      - "/var/lib/docker/containers:/usr/share/dockerlogs/data:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - metricbeat_net
+
+
+volumes:
+# create a persistent volume for metricbeat
+  metricbeat_data:
+
+networks:
+  metricbeat_net:
+    external:
+      name: elkdocker_elk_net

@@ -1,0 +1,56 @@
+<section>
+  <div class="page-header">
+    <h1>{{ vm.pageTitle }} '{{ vm.contactInfo.team }}'</h1>
+  </div>
+  <form name="form" ng-submit="vm.submitForm()">
+    <fieldset>
+      <div class="form-group has-feedback" ng-class="{ 'has-error': form.team.$invalid, 'has-success': form.team.$valid }">
+        <label for="team">Team</label>
+        <input class="form-control" type="text" id="team" name="team" placeholder="Team" ng-model="vm.contactInfo.team" required autofocus>
+        <span class="glyphicon form-control-feedback" ng-class="{ 'glyphicon-remove': form.team.$invalid, 'glyphicon-ok': form.team.$valid }"></span>
+        <span class="help-block" ng-messages="form.team.$error">
+          <p ng-message="required">This field is required</p>
+        </span>
+      </div>
+      <div class="form-group has-feedback" ng-class="{ 'has-error': form.teamEmail.$invalid, 'has-success': form.teamEmail.$valid }">
+        <label for="teamEmail">Team Email</label>
+        <input class="form-control" type="text" id="teamEmail" name="teamEmail" placeholder="Team Email" ng-model="vm.contactInfo.teamEmail" required autofocus>
+        <span class="glyphicon form-control-feedback" ng-class="{ 'glyphicon-remove': form.teamEmail.$invalid, 'glyphicon-ok': form.teamEmail.$valid }"></span>
+        <span class="help-block" ng-messages="form.teamEmail.$error">
+          <p ng-message="required">This field is required</p>
+        </span>
+      </div>
+      <div class="form-group has-feedback" ng-class="{ 'has-error': form.scrumMaster.$invalid, 'has-success': form.adminPrimary.$valid }">
+        <label for="scrumMaster">Scrum Master</label>
+        <select class="form-control" name="scrumMaster" id="scrum_master_select" ng-model="vm.contactInfo.scrumMaster"
+          ng-options="user._id as (user.displayName + ' (' + user.username + ')') for user in vm.users" required>
+          <option value="" disabled selected>--Select Scrum Master--</option>
+        </select>
+        <span class="help-block" ng-messages="form.scrumMaster.$error">
+          <p ng-message="required">This field is required</p>
+        </span>
+      </div>
+      <div class="form-group has-feedback" ng-class="{ 'has-error': form.productOwner.$invalid, 'has-success': form.productOwner.$valid }">
+        <label for="productOwner">Product Owner</label>
+        <select class="form-control" name="productOwner" id="product_owner_select" ng-model="vm.contactInfo.productOwner"
+          ng-options="user._id as (user.displayName + ' (' + user.username + ')') for user in vm.users" required>
+          <option value="" disabled selected>--Select Product Owner--</option>
+        </select>
+        <span class="help-block" ng-messages="form.productOwner.$error">
+          <p ng-message="required">This field is required</p>
+        </span>
+      </div>
+      <div class="form-group has-feedback" ng-class="{ 'has-error': form.jiraTemplateUrl.$invalid, 'has-success': form.jiraTemplateUrl.$valid }">
+        <label for="jiraTemplateUrl">JIRA Template Url</label>
+        <input class="form-control" type="text" id="jiraTemplateUrl" name="jiraTemplateUrl" placeholder="JIRA Template Url" ng-model="vm.contactInfo.jiraTemplateUrl" required>
+        <span class="glyphicon form-control-feedback" ng-class="{ 'glyphicon-remove': form.jiraTemplateUrl.$invalid, 'glyphicon-ok': form.jiraTemplateUrl.$valid }"></span>
+        <span class="help-block" ng-messages="form.jiraTemplateUrl.$error">
+          <p ng-message="required">This field is required</p>
+        </span>
+      </div>
+    </fieldset>
+    <div class="btn-group pull-left" title="{{form.$invalid || vm.formSubmitting ? 'Ensure all values are valid and required fields are filled in.' : ''}}">
+      <button class="btn btn-primary" type="submit" ng-disabled="form.$invalid || vm.formSubmitting">Save</button>
+    </div>
+  </form>
+</section>

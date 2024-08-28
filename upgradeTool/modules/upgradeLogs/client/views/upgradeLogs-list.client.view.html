@@ -1,0 +1,28 @@
+<section>
+  <div class="page-header">
+    <div class="pull-right" style="display:flex; align-items: center">
+      <div class="btn-toolbar input-group" style="width:200px;">
+        <input type="text" class="form-control" id="filter-field" placeholder="Search any field...">
+        <span class="input-group-addon glyphicon glyphicon-search"></span>
+      </div>
+    </div>
+    <h1>Downgrade/Upgrade Logs for '{{ vm.tool.toolEmailName }}' <a ui-sref="tools.view({ toolId: '{{vm.toolId}}' })">Tool ID: {{ vm.toolId }}</a></h1>
+  </div>
+
+  <!-- UPGRADE LOGS TABLE LOADING -->
+  <div ng-if="vm.tableLoading" class="table-loading">
+    <div class="ebLoader">
+      <div class="ebLoader-Holder">
+        <span class="ebLoader-Dots ebLoader-Dots_color_darkPurple ebLoader-Dots_size_big"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- UPGRADE LOGS TABLE -->
+  <div ng-style="vm.tableLoading && { 'visibility': 'hidden' }">
+    <table class="table table-striped table-condensed non-clickable-row" id="upgradeLogs-table">
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+</section>

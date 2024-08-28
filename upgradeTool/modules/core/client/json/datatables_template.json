@@ -1,0 +1,15 @@
+{
+  "columnDefs": [{
+    "defaultContent": "-",
+    "targets": "_all"
+  }],
+  "sDom": "Brti",
+  "paging": true,
+  "paginate": true,
+  "deferRender": true,
+  "scroller": true,
+  "scrollCollapse": true,
+  "info": false,
+  "bLengthChange": false,
+  "searching": true
+}

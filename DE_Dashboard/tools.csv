@@ -1,0 +1,14 @@
+name,domain,expected,expected_status,interval,type,method,post_data,port,timeout,order,allow_notifications,public,group_id,headers,permalink,verifyssl,jira_board
+DIT,http://atvdit.athtem.eei.ericsson.se,,,60s,http,GET,,,60s,1,TRUE,TRUE,1,,dit,FALSE,CIS-95353:JIRA
+DTT,http://atvdtt.athtem.eei.ericsson.se,,,60s,http,GET,,,60s,2,TRUE,TRUE,1,,dtt,FALSE,CIS-95353:JIRA
+OQS,http://atvoqs.athtem.eei.ericsson.se,,,60s,http,GET,,,60s,3,TRUE,TRUE,1,,oqs,FALSE,CIS-95353:JIRA
+Capacity Planner,http://atvcap.athtem.eei.ericsson.se/,,,60s,http,GET,,,60s,4,TRUE,TRUE,1,,cap,FALSE,CIS-95353:JIRA
+Meteo,http://10.45.207.10/#,,,60s,http,GET,,,60s,6,TRUE,TRUE,2,,meteo,FALSE,CIS-61146:JIRA
+CI Portal,http://ci-portal.seli.wh.rnd.internal.ericsson.com/,,,60s,http,GET,,,60s,7,TRUE,TRUE,3,,ciportal,FALSE,CIE/DE+Support:CONFLUENCE
+Gerrit,http://gerrit.ericsson.se/,,,60s,http,GET,,,60s,8,TRUE,TRUE,3,,gerrit,FALSE,CIE/DE+Support:CONFLUENCE
+MT Radiator,https://mtportal.seli.wh.rnd.internal.ericsson.com/metrics/#maintrack-radiator,,,60s,http,GET,,,60s,9,TRUE,TRUE,3,,mtrad,FALSE,CIE/DE+Support:CONFLUENCE
+Nexus (local),https://arm901-eiffel004.athtem.eei.ericsson.se:8443/nexus/#welcome,,,60s,http,GET,,,60s,12,TRUE,TRUE,3,,nexuslocal,FALSE,CIE/DE+Support:CONFLUENCE
+Nexus (E2C),https://arm1s11-eiffel004.eiffel.gic.ericsson.se:8443/nexus/#welcome,,,60s,http,GET,,,60s,13,TRUE,TRUE,3,,nexushub,FALSE,CIE/DE+Support:CONFLUENCE
+opengrok,https://enm-opengrok.seli.wh.rnd.internal.ericsson.com/e2c-enm-opengrok/,,,60s,http,GET,,,60s,12,TRUE,TRUE,3,,opengrok,FALSE,CIE/DE+Support:CONFLUENCE
+TEoD,http://atvpbookspp.athtem.eei.ericsson.se/,,,60s,http,GET,,,60s,10,TRUE,TRUE,4,,teod,FALSE,CIS-114944:JIRA
+TMS,https://taftm.seli.wh.rnd.internal.ericsson.com/#tm,,,60s,http,GET,,,60s,11,TRUE,TRUE,5,,tms,FALSE,CIP-30931:JIRA

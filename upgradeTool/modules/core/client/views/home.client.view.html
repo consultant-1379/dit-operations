@@ -1,0 +1,277 @@
+<section>
+  <div class="home-page-welcome">
+  </div>
+  <div ng-if="vm.loading">
+    <div class="ebLoader">
+      <div class="ebLoader-Holder">
+        <span class="ebLoader-Dots ebLoader-Dots_color_darkPurple ebLoader-Dots_size_big"></span>
+      </div>
+    </div>
+  </div>
+  <div>
+    <br>
+    <table class="table table-striped table-condensed table-home" ng-hide="vm.loading">
+      <tr>
+        <th style="width:200px">Tool</th>
+        <th style="width:180px">Current Version</th>
+        <th style="width:180px">Merged Version</th>
+        <th style="width:250px">Downgrade/Upgrade To</th>
+        <th style="width:560px;">Actions</th>
+      </tr>
+      <tr ng-repeat="tool in vm.tools" ng-if="!tool.name.startsWith('oqs-')">
+        <td><strong>{{ tool.toolEmailName }}</strong></td>
+        <td class="table-text">{{ vm[tool.name].currentVersion }}</td>
+        <td class="table-text">{{ vm[tool.name].mergedVersion }}</td>
+        <td class="table-text">
+          <select ng-model="vm[tool.name].selectedVersion" ng-options="version as version for version in vm[tool.name].versions"
+            required>
+            <option value="" disabled selected> {{ vm[tool.name].versionList }} </option>
+          </select>
+        </td>
+        <td>
+          <button ng-click="vm.executeUpgrade(tool.name)" class="btn btn-success"
+            ng-disabled="vm[tool.name].upgradeButtonDisabled || !vm[tool.name].selectedVersion">
+            {{ (vm.isUpgrade(vm[tool.name].selectedVersion, vm[tool.name].currentVersion)) ? 'Upgrade' : 'Downgrade' }}
+          </button>
+          <span title="{{ vm[tool.name].plannedEmailMessage }}" class="email-modal-pop-up-button">
+            <a class="btn btn-primary" ng-click="vm.getToolSetupEmail(tool.name)">
+              Send Planned Email
+            </a>
+          </span>
+          <button ng-click="vm.setCommits(tool.name)" class="btn btn-info">
+            {{ vm[tool.name].showcommits ? "Hide" : "Show" }} Commits
+          </button>
+          <button class="btn btn-warning" ui-sref="logs.list({ toolName: '{{tool.name}}' })">
+            History
+          </button>
+          <button class="btn btn-{{ vm[tool.name].ci ? 'success' : 'danger' }}" ng-click=vm.toggleToolCI(tool.name) id="ci-button-{{tool.name}}">
+            Continuous Integration
+            <i class="ebIcon ebIcon_info" title="Auto upgrade is {{ vm[tool.name].ci ? 'Enabled' : 'Disabled' }} for {{ tool.name }}.{{ vm[tool.name].ci ? '&#10 User does not have to take unnecessary steps unless stated in an email from Upgrade Tool.' : '' }}"></i>
+          </button>
+          <a ng-if="tool.grafanaDashboardUrl" class="btn btn-secondary" href="{{tool.grafanaDashboardUrl}}" target="_blank">
+            Grafana Monitoring Dashboard
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td><h5>OQS</h5></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+          <button ng-click="vm.executeOQSUpgrade()" class="btn btn-success"
+            ng-disabled="vm[tool.name].upgradeButtonDisabled || !vm['oqs-server'].selectedVersion || !vm['oqs-apidocs'].selectedVersion || !vm['oqs-helpdocs'].selectedVersion || !vm['oqs-client'].selectedVersion
+            || !vm['oqs-baseline'].selectedVersion">
+            {{ (vm.isUpgradeButton) ? 'Upgrade' : 'Downgrade' }}
+          </button>
+          <span title="{{ vm[tool.name].plannedEmailMessage }}" class="email-modal-pop-up-button">
+            <a class="btn btn-primary" ng-click="vm.getToolSetupEmail('oqs-baseline')">
+              Send Planned Email
+            </a>
+          </span>
+          <button class="btn btn-info oqs-toggle" ng-click="vm.showOQSRepos()">Select Version <i class="fas"
+            ng-class="vm.oqsToggle ? 'fa-caret-up' : 'fa-caret-down'"></i>
+          </button>
+        </td>
+      </tr>
+      <tr class="OQS" ng-repeat="tool in vm.tools" ng-if="tool.name.startsWith('oqs-')" style="display: none;">
+        <td><strong>{{ vm[tool.name].displayName }}</strong></td>
+        <td class="table-text">{{ vm[tool.name].currentVersion }}</td>
+        <td class="table-text">{{ vm[tool.name].mergedVersion }}</td>
+        <td class="table-text">
+          <select ng-model="vm[tool.name].selectedVersion" ng-change="vm.checkIfUpgrade(vm[tool.name].selectedVersion)" ng-options="version as version for version in vm[tool.name].versions"
+            required>
+            <option value="" disabled>-- Select Version --</option>
+            <option value="" disabled selected> {{ vm[tool.name].versionList }} </option>
+          </select>
+        </td>
+        <td>
+          <button ng-click="vm.setCommits(tool.name)" class="btn btn-info">
+            {{ vm[tool.name].showcommits ? "Hide" : "Show" }} Commits
+          </button>
+          <button class="btn btn-warning" ui-sref="logs.list({ toolName: '{{tool.name}}' })">
+            History
+          </button>
+          <a ng-if="tool.grafanaDashboardUrl" class="btn btn-secondary" href="{{tool.grafanaDashboardUrl}}" target="_blank">
+            Grafana Monitoring Dashboard
+          </a>
+        </td>
+      </tr>
+      <tr ng-show="vm.tools.length === 0">
+        <td colspan="5">No Tools Found in Database</td>
+      </tr>
+    </table>
+    <table>
+      <tr ng-show="vm.showCommitsForCurrentTool()">
+        <th>Unreleased Commits of {{ vm.currentTool }}
+          <pre id="release-notes"> {{ vm.commits }}</pre>
+        </th>
+      </tr>
+      <tr ng-show="vm.showCommitsForCurrentTool()">
+        <th>Last 5 Released Commits of {{ vm.currentTool }}
+          <pre id="pre-release-notes"> {{ vm.previousCommits }}</pre>
+        </th>
+      </tr>
+      <tr ng-show="vm.showTerminal">
+        <th>Upgrade of {{ vm.upgradingTool }} to {{ vm.upgradeVersion }}
+          <pre class="terminal-output" id="outputs">{{ vm.terminal }}</pre>
+        </th>
+      </tr>
+    </table>
+  </div>
+  <!-- The Modal -->
+  <div id="emailModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close">&times;</span>
+        <h2>Fill in '{{ vm.plannedEmail.displayName }}' Planned Email Details</h2>
+      </div>
+    <div class="modal-body">
+      <form name="emailForm" ng-submit="vm.sendPlannedEmail()">
+        <fieldset>
+          <legend>Enter Date-Time <i class="ebIcon ebIcon_info" title="Note: Default Upgrade Time is {{ vm.getUpgradeTime(vm.plannedEmail.toolName, true) }} when CI is Enabled"></i></legend>
+          <input id="email-datetime" class="form-control form-planned-datetime-icon datetime-input" type="datetime-local" ng-model="vm.emailDate" ng-change="vm.emailDateValidator()" format-value="yyyy-MM-ddTHH:mm" placeholder="date" required>
+          <span class="help-block" ng-if="vm.furtherThanAWeek">
+            <p>Warning: Upgrade date selected is more than a week in the future.</p>
+          </span>
+          <span class="help-block" ng-if="vm.useDefaultTime">
+            <p>Note: Upgrade time will be set to the Tool's default time of {{ vm.getUpgradeTime(vm.plannedEmail.toolName, true) }} because CI is Enabled.</p>
+          </span>
+        </fieldset>
+        <br>
+        <fieldset>
+          <legend>Contact Info</legend>
+          <table>
+            <tr ng-repeat="(key, contact) in vm.emailContactInfo track by $index" class="panel panel-default">
+              <td ng-if="contact.other.includes('http')"><strong>{{key}}: </strong></td>
+              <td ng-if="contact.other.includes('http')"><a href="{{ contact.other }}" target="_blank">{{ contact.name }}</a></td>
+              <td ng-if="!contact.other.includes('http')"><strong>{{key}}: {{contact.name}} </strong></td>
+              <td ng-if="!contact.other.includes('http')">{{ contact.other }}</td>
+            </tr>
+          </table>
+        </fieldset>
+        <br>
+        <fieldset>
+          <legend>Recipients Emails</legend>
+          <div ng-repeat="email in vm.plannedEmail.recipients track by $index" class="panel panel-default">
+            <div class="panel-heading clearfix">
+              <h6 class="panel-title pull-left" style="padding-top: 7.5px;">Email Address {{ $index + 1 }}</h6>
+              <div class="btn-group pull-right">
+                <button id="remove_recipients[{{$index}}]" ng-click="vm.removeEmailAddress($index)" type="button"
+                  class="btn btn-sm"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+              </div>
+            </div>
+            <div class="panel-body">
+              <!-- Email addresses -->
+              <div class="form-group has-feedback"
+                ng-class="{ 'has-error': emailForm['recipients[' + $index + ']'].$invalid, 'has-success': emailForm['recipients[' + $index + ']'].$valid }">
+                <label>Email Address</label>
+                <input class="form-control" name="recipients[{{$index}}]" type="text" placeholder="email_address"
+                  ng-model="vm.plannedEmail.recipients[$index]"
+                  ng-pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/">
+                <span class="glyphicon form-control-feedback"
+                  ng-class="{ 'glyphicon-remove': emailForm['recipients[' + $index + ']'].$invalid, 'glyphicon-ok': emailForm['recipients[' + $index + ']'].$valid }"></span>
+                <span class="help-block" ng-messages="emailForm['recipients[' + $index + ']'].$error">
+                  <p ng-message="pattern">This field must be a valid email address e.g. example@ericsson.com</p>
+                </span>
+              </div>
+            </div>
+          </div>
+          <button id="add-address" ng-click="vm.addEmailAddress()" type="button" class="btn btn-default pull-right"><i
+              class="glyphicon glyphicon-plus"></i> Add Email Address</button>
+        </fieldset>
+        <fieldset>
+          <legend>Comment</legend>
+          <textarea ng-model="vm.plannedEmail.comment" placeholder="email comment"></textarea>
+        </fieldset>
+        <fieldset>
+          <legend>Select Downgrade/Upgrade Version</legend>
+          <select ng-change="vm.getEmailToolCommits()" ng-model="vm.emailVersion" ng-options="version as version for version in vm[vm.plannedEmail.toolName].versions" ng-if="!vm.isOQS"
+            required>
+            <option value="" disabled selected> {{ vm[vm.plannedEmail.toolName].versionList }} </option>
+          </select>
+          <div class="OQSSelect" ng-if="vm.isOQS">
+            <label>Server</label>
+            <select ng-change="vm.getEmailToolCommits('oqs-server')" ng-model="vm.emailVersionServer" ng-options="version as version for version in vm['oqs-server'].versions"
+              required>
+              <option value="" disabled selected> {{ vm['oqs-server'].versionList }} </option>
+            </select>
+            <label>Client</label>
+            <select ng-change="vm.getEmailToolCommits('oqs-client')" ng-model="vm.emailVersionClient" ng-options="version as version for version in vm['oqs-client'].versions"
+              required>
+              <option value="" disabled selected> {{ vm['oqs-client'].versionList }} </option>
+            </select>
+            <label>Helpdocs</label>
+            <select ng-change="vm.getEmailToolCommits('oqs-helpdocs')" ng-model="vm.emailVersionHelpdocs" ng-options="version as version for version in vm['oqs-helpdocs'].versions"
+              required>
+              <option value="" disabled selected> {{ vm['oqs-helpdocs'].versionList }} </option>
+            </select>
+            <label>Apidocs</label>
+            <select ng-change="vm.getEmailToolCommits('oqs-apidocs')" ng-model="vm.emailVersionApidocs" ng-options="version as version for version in vm['oqs-apidocs'].versions"
+              required>
+              <option value="" disabled selected> {{ vm['oqs-apidocs'].versionList }} </option>
+            </select>
+            <label>Baseline</label>
+            <select ng-change="vm.getEmailToolCommits('oqs-baseline')" ng-model="vm.emailVersionBaseline" ng-options="version as version for version in vm['oqs-baseline'].versions"
+              required>
+              <option value="" disabled selected> {{ vm['oqs-baseline'].versionList }} </option>
+            </select>
+          </div>
+          <span ng-if="vm.emailLog">{{vm.emailLog.plannedEmail.sentDate ? 'Note: Planned Email was already sent for this version' : '' }}</span>
+        </fieldset>
+        <fieldset>
+          <h3>Commits {{ vm.isRollBack }}:</h3>
+          <p ng-if="vm.plannedEmail.commits.message">{{ vm.plannedEmail.commits.message }}</p>
+          <table ng-if="vm.plannedEmail.commits.length && vm.plannedEmail.commits.message !== 'All Commits Released.'" id="email-commits" class="table">
+            <thead>
+              <tr>
+                <th>Number</th>
+                <th>User</th>
+                <th colspan="2">Commit Message</th>
+                <th>Issue</th>
+                <th>Type</th>
+                <th colspan="2">Summary</th>
+                <th colspan="2">Issue Comment</th>
+                <th colspan="2">Comment</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="commit in vm.plannedEmail.commits" ng-init="parentIndex = $index">
+                <td>{{ $index + 1 }}</td>
+                <td>{{ commit.commitUser }}</td>
+                <td colspan="2" width="100">{{ commit.commitMessage }}</td>
+                <td colspan="6" width="100" ng-if="commit.issues.length">
+                  <table id="email-issues" class="table">
+                    <tbody>
+                      <tr ng-repeat="issueInfo in commit.issues">
+                        <td><a href="{{ issueInfo.issueUrl }}" target="_blank">{{ issueInfo.issue }}</a></td>
+                        <td>{{ issueInfo.issueType }}</td>
+                        <td colspan="2">{{ issueInfo.issueSummary }}</td>
+                        <td colspan="2"><textarea rows="4" cols="20" ng-model="vm.plannedEmail.commits[parentIndex].issues[$index].comment" placeholder="issue comment"></textarea></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+                <td colspan="6" ng-if="!commit.issues.length"></td>
+                <td colspan="2" ng-if="!commit.issues.length"><textarea rows="4" cols="20" ng-model="vm.plannedEmail.commits[$index].comment" placeholder="commit comment"></textarea></td>
+                <td colspan="2" ng-if="commit.issues.length"></td>
+                <td><button id="emailCommit[{{$index}}]" ng-click="vm.removeEmailCommit($index)" type="button"
+                  class="btn btn-sm"><i class="glyphicon glyphicon-remove"></i> Remove</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </fieldset>
+        <br>
+        <hr>
+        <br>
+        <div class="btn-group pull-left" title="{{emailForm.$invalid? 'Ensure all values are valid and required fields are filled in.' : ''}}">
+          <button class="btn btn-primary" type="submit" ng-disabled="emailForm.$invalid || vm.loading || vm.sendingEmail">Send Email</button>
+        </div>
+        <br>
+        <br>
+      </form>
+    </div>
+  </div>
+</div>
+</section>
